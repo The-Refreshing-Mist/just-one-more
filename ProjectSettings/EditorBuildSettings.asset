@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Title_screen/TitleScreen.unity
     guid: d66b26b505a2941eb85c739a932d775b
   - enabled: 1
-    path: Assets/Scenes/Drunk_driving.unity
+    path: Assets/Scenes/Drunk_driving/Drunk_driving.unity
     guid: 1a0181621cefa4f9084762656ba73f51
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
