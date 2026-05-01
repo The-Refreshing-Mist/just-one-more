@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1348,7 +1348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 735, y: 0}
+  m_AnchoredPosition: {x: 670, y: -20}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 4, y: 1}
 --- !u!222 &1127008250
@@ -1406,8 +1406,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1691,7 +1691,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1465565867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a5d1bdec0be09f4a84c43f6007e20f4, type: 3}
+  m_Script: {fileID: 11500000, guid: d368def1d2e7e4a59999f9cf0559c8c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DrinkMinigameManager
   drinkButtonTemplate: {fileID: 1081219587}
@@ -1709,7 +1709,7 @@ MonoBehaviour:
   - {fileID: -4350309758379621827, guid: 1e8b6f83f9865c04cb81a4e14482dcd7, type: 3}
   gameTimerText: {fileID: 1127008251}
   drunknessText: {fileID: 2100649359}
-  gameDuration: 300
+  gameDuration: 10
   tutorialMode: 0
   tutorialText: {fileID: 0}
   minigamePanel: {fileID: 426566400}
@@ -1731,12 +1731,12 @@ MonoBehaviour:
   citrusWaitMin: 0.6
   citrusWaitMax: 1.8
   citrusFlashWindow: 0.55
-  critChance: 0.08
+  critChance: 0.12
   barCrawlDuration: 10
   balanceMoveSpeed: 1.4
   balanceDriftSpeed: 0.7
   neonFillSpeed: 0.65
-  neonTargetMin: 0.75
+  neonTargetMin: 0.72
   neonTargetMax: 0.9
   neonVisualGroup: {fileID: 5812764}
   neonFillRect: {fileID: 1438485381}
@@ -1750,6 +1750,7 @@ MonoBehaviour:
   lagMarkerSpeed: 1.2
   lagTargetMin: 0.65
   lagTargetMax: 0.85
+  drivingSceneName: Drivinglevel1
 --- !u!1 &1789786765
 GameObject:
   m_ObjectHideFlags: 0
@@ -2403,7 +2404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 20, y: -20}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2100649358

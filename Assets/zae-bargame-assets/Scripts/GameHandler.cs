@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
@@ -96,6 +97,9 @@ public class GameHandler : MonoBehaviour
 
     private int totalDrunkness = 0;
     private float gameTimeRemaining = 0f;
+
+    public string drivingSceneName = "Drivinglevel1";
+    private bool hasLoadedDrivingScene = false;
 
     private bool minigameActive = false;
     private int currentDrinkIndex = -1;
@@ -1128,18 +1132,29 @@ void ClearNeonPixels()
         }
     }
 
-    void UpdateGameTimer()
+void UpdateGameTimer()
+{
+    if (gameTimeRemaining > 0f)
     {
-        if (gameTimeRemaining > 0f)
+        gameTimeRemaining -= Time.deltaTime;
+
+        if (gameTimeRemaining <= 0f)
         {
-            gameTimeRemaining -= Time.deltaTime;
+            gameTimeRemaining = 0f;
+            UpdateMainGameUI();
 
-            if (gameTimeRemaining < 0f)
-                gameTimeRemaining = 0f;
+            if (!hasLoadedDrivingScene)
+            {
+                hasLoadedDrivingScene = true;
+                SceneManager.LoadScene(drivingSceneName);
+            }
+
+            return;
         }
-
-        UpdateMainGameUI();
     }
+
+    UpdateMainGameUI();
+}
 
     void UpdateMainGameUI()
     {
