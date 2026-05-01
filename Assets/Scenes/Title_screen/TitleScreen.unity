@@ -2691,9 +2691,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 340939708}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadBarMiniGame
+      - m_Target: {fileID: 2137499417}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: PlayGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3204,6 +3204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2137499415}
   - component: {fileID: 2137499416}
+  - component: {fileID: 2137499417}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -3240,6 +3241,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OptionsPopup
   optionsPanel: {fileID: 1423636560}
   pauseGameWhenOpen: 1
+--- !u!114 &2137499417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137499414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69bbaeea6743a45799b07df0fb2fcd98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainMenu
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
