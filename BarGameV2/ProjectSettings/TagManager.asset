@@ -38,16 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 680734217
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: counter
+    uniqueID: 2249483213
+    locked: 0
+  - name: GameObjects
+    uniqueID: 3341688897
+    locked: 0
+  - name: tempfix
+    uniqueID: 3362730475
+    locked: 0
   m_RenderingLayers:
   - Default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
   m_MigratedRenderPipelines: []

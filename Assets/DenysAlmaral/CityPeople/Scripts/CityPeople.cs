@@ -1,39 +1,54 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CityPeople
 {
     public class CityPeople : MonoBehaviour
     {
         [SerializeField]
-        [Tooltip("Autoplay random animation clips")] 
-        private bool AutoPlayAnimations = true;
+        [Tooltip("Play one walking animation")]
+        private bool PlayWalkAnimation = true;
+
+        [SerializeField]
+        [Tooltip("Name of the walking animation state")]
+        private string WalkAnimationName = "locom_m_slowWalk_40f";
+
+        [SerializeField]
+        [Tooltip("Add a capsule collider to the NPC")]
+        private bool AddClickCollider = true;
+
         [SerializeField]
         [Tooltip("Overrides palette materials, skips other objects")]
         private Material PaletteOverride;
+
         public string CurrentPaletteName { get; private set; }
 
-        private AnimationClip[] myClips;
         private Animator animator;
+
         public const string people_pal_prefix = "people_pal";
         private List<Renderer> _paletteMeshes;
 
         private void Awake()
         {
-            var AllRenderers = gameObject.GetComponentsInChildren<Renderer>();
+            Renderer[] allRenderers = gameObject.GetComponentsInChildren<Renderer>();
             _paletteMeshes = new List<Renderer>();
-            foreach (Renderer r in AllRenderers)
+
+            foreach (Renderer r in allRenderers)
             {
-                var matName = r.sharedMaterial.name;
-                var len = Math.Min( people_pal_prefix.Length, matName.Length);
-                if (matName[0..len] == CityPeople.people_pal_prefix)
+                if (r.sharedMaterial == null)
+                {
+                    continue;
+                }
+
+                string matName = r.sharedMaterial.name;
+
+                if (matName.StartsWith(people_pal_prefix))
                 {
                     _paletteMeshes.Add(r);
                 }
             }
+
             if (_paletteMeshes.Count > 0)
             {
                 CurrentPaletteName = _paletteMeshes[0].sharedMaterial.name;
@@ -45,68 +60,59 @@ namespace CityPeople
             }
         }
 
-        void Start()
+        private void Start()
         {
             animator = GetComponent<Animator>();
-            if (animator != null)
+
+            if (animator != null && PlayWalkAnimation)
             {
-                myClips = animator.runtimeAnimatorController.animationClips;
-                if (AutoPlayAnimations)
-                {
-                    PlayAnyClip();
-                    StartCoroutine(ShuffleClips());
-                }
+                animator.Play(WalkAnimationName);
             }
 
-            if (AutoPlayAnimations)
+            if (AddClickCollider && GetComponent<CapsuleCollider>() == null)
             {
-                //collider for detect clicks near the character
-                CapsuleCollider collider =  gameObject.AddComponent<CapsuleCollider>();
-                //average character dimentions
+                CapsuleCollider collider = gameObject.AddComponent<CapsuleCollider>();
+
                 collider.center = new Vector3(0f, 0.8f, 0f);
                 collider.radius = 0.3f;
                 collider.height = 1.77f;
                 collider.direction = 1;
             }
-
         }
 
         public void SetPalette(Material mat)
         {
-            if (mat != null)
+            if (mat == null)
             {
-                if (mat.name[0..people_pal_prefix.Length] == CityPeople.people_pal_prefix)
+                return;
+            }
+
+            if (mat.name.StartsWith(people_pal_prefix))
+            {
+                CurrentPaletteName = mat.name;
+
+                foreach (Renderer r in _paletteMeshes)
                 {
-                    CurrentPaletteName = mat.name;
-                    foreach (Renderer r in _paletteMeshes)
-                    {
-                        r.material = mat;
-                    }
-                } else
-                {
-                    Debug.Log("Material name should start with 'palete_pal...' by convention.");
-                } 
+                    r.material = mat;
+                }
             }
-        }
-
-        public void PlayAnyClip()
-        {
-            if (myClips.Length > 0)
+            else
             {
-                var cl = myClips[Random.Range(0, myClips.Length)];
-                animator.CrossFadeInFixedTime(cl.name, 1.0f, -1, Random.value * cl.length);
+                Debug.Log("Material name should start with 'people_pal' by convention.");
             }
-            else Debug.LogWarning("Missing animations clips.");
         }
 
-        IEnumerator ShuffleClips()
+        public void PlayWalkAnimationNow()
         {
-            while (true)
+            if (animator == null)
             {
-                yield return new WaitForSeconds(15.0f + Random.value * 5.0f);
-                PlayAnyClip();
+                animator = GetComponent<Animator>();
+            }
+
+            if (animator != null)
+            {
+                animator.Play(WalkAnimationName);
             }
         }
-
     }
 }
