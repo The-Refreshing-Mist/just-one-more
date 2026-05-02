@@ -5,11 +5,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int currentDrivingLevel = 1;
+    public int nextDrivingLevel = 1;
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
@@ -19,19 +19,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void GoToBar()
+    public void GoToNextDrivingLevel()
     {
-        SceneManager.LoadScene("BarScene");
-    }
-
-    public void StartDrivingLevel()
-    {
-        SceneManager.LoadScene("DrivingLevel" + currentDrivingLevel);
+        SceneManager.LoadScene("Drivinglevel" + nextDrivingLevel);
     }
 
     public void FinishDrivingLevel()
     {
-        currentDrivingLevel++;
+        nextDrivingLevel++;
         SceneManager.LoadScene("BarScene");
     }
 }

@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using TMPro;  // Add this namespace to work with TextMeshProUGUI
+using TMPro;
 
 public class LevelEndTrigger : MonoBehaviour
 {
-    public string nextSceneName;           // The name of the next scene to load
-    public TextMeshProUGUI levelCompleteText;  // Reference to the TextMeshProUGUI component for the "Level Complete" text
-    public GameObject car;                 // Reference to the car GameObject (or player)
+    public TextMeshProUGUI levelCompleteText;
+
+    private bool levelCompleted = false;
 
     private void Start()
     {
-        // Initially hide the "Level Complete" text
+        Time.timeScale = 1f;
+
         if (levelCompleteText != null)
         {
             levelCompleteText.enabled = false;
@@ -19,36 +19,42 @@ public class LevelEndTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the object entering the trigger is the player (tagged as "Player")
+        if (levelCompleted)
+            return;
+
         if (other.CompareTag("Player"))
         {
-            // Show the "Level Complete" text
+            levelCompleted = true;
             ShowLevelComplete();
-            
-            // Pause the game
             Time.timeScale = 0f;
         }
     }
 
     private void ShowLevelComplete()
     {
-        // Ensure the level complete text is shown when the player reaches the endpoint
         if (levelCompleteText != null)
         {
-            levelCompleteText.enabled = true;  // Display the "Level Complete" message
+            levelCompleteText.enabled = true;
+            levelCompleteText.text = "Level Complete!\nPress Space to continue";
         }
     }
 
     private void Update()
     {
-        // If the game is paused (Time.timeScale == 0)
-        if (Time.timeScale == 0f)
+        if (!levelCompleted)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            // Wait for the player to press the Spacebar to continue to the next scene
-            if (Input.GetKeyDown(KeyCode.Space))
+            Time.timeScale = 1f;
+
+            if (GameManager.Instance != null)
             {
-                // Load the next level (or scene) specified in the inspector
-                SceneManager.LoadScene(nextSceneName);
+                GameManager.Instance.FinishDrivingLevel();
+            }
+            else
+            {
+                Debug.LogError("GameManager not found.");
             }
         }
     }
