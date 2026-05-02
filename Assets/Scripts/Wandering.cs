@@ -6,7 +6,6 @@ public class Wandering : MonoBehaviour
     public float wanderRadius = 20f;
     public float waitTime = 2f;
 
-    public string walkAnimationName = "locom_m_slowWalk_40f";
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -36,7 +35,6 @@ public class Wandering : MonoBehaviour
             return;
         }
 
-        PlayWalkAnimation();
         PickNewDestination();
     }
 
@@ -55,12 +53,10 @@ public class Wandering : MonoBehaviour
             {
                 PickNewDestination();
                 waitTimer = 0f;
-                PlayWalkAnimation();
             }
         }
         else
         {
-            PlayWalkAnimation();
         }
     }
 
@@ -77,23 +73,4 @@ public class Wandering : MonoBehaviour
         }
     }
 
-    void PlayWalkAnimation()
-    {
-        if (isWalking)
-        {
-            return;
-        }
-
-        int stateHash = Animator.StringToHash(walkAnimationName);
-
-        if (animator.HasState(0, stateHash))
-        {
-            animator.Play(stateHash, 0, 0f);
-            isWalking = true;
-        }
-        else
-        {
-            Debug.LogError("Animator does not have a state named: " + walkAnimationName);
-        }
-    }
 }

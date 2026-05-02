@@ -17,16 +17,48 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void GoToNextDrivingLevel()
+    private void OnDestroy()
     {
-        SceneManager.LoadScene("Drivinglevel" + nextDrivingLevel);
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Loaded scene: " + scene.name);
+        Debug.Log("Next driving level is: Drivinglevel" + nextDrivingLevel);
+
+        if (scene.name == "BarScene")
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        if (scene.name.StartsWith("Drivinglevel"))
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+
+    public void StartDriving()
+    {
+        string sceneToLoad = "Drivinglevel" + nextDrivingLevel;
+
+        Debug.Log("Loading: " + sceneToLoad);
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void FinishDrivingLevel()
     {
         nextDrivingLevel++;
+
+        Debug.Log("Driving level finished. Next driving level is now: Drivinglevel" + nextDrivingLevel);
+
         SceneManager.LoadScene("BarScene");
     }
 }

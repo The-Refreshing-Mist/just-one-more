@@ -98,7 +98,6 @@ public class GameHandler : MonoBehaviour
     private int totalDrunkness = 0;
     private float gameTimeRemaining = 0f;
 
-    public string drivingSceneName = "Drivinglevel1";
     private bool hasLoadedDrivingScene = false;
 
     private bool minigameActive = false;
@@ -1134,26 +1133,29 @@ void ClearNeonPixels()
 
 void UpdateGameTimer()
 {
-    if (gameTimeRemaining > 0f)
-    {
-        gameTimeRemaining -= Time.deltaTime;
+    if (hasLoadedDrivingScene)
+        return;
 
-        if (gameTimeRemaining <= 0f)
-        {
-            gameTimeRemaining = 0f;
-            UpdateMainGameUI();
+    gameTimeRemaining -= Time.deltaTime;
 
-            if (!hasLoadedDrivingScene)
-            {
-                hasLoadedDrivingScene = true;
-                SceneManager.LoadScene(drivingSceneName);
-            }
-
-            return;
-        }
-    }
+    if (gameTimeRemaining < 0f)
+        gameTimeRemaining = 0f;
 
     UpdateMainGameUI();
+
+    if (gameTimeRemaining <= 0f)
+    {
+        hasLoadedDrivingScene = true;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartDriving();
+        }
+        else
+        {
+            Debug.LogError("GameManager not found. Make sure GameManager exists in the first scene.");
+        }
+    }
 }
 
     void UpdateMainGameUI()
